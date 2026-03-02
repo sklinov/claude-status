@@ -309,13 +309,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         addFooterItems()
 
-        // Update menu bar icon to worst component status
-        let worstStatus = visibleComponents
+        // Update menu bar icon to worst of component status and incident impact
+        let worstComponent = visibleComponents
             .map { ServiceStatus(rawValue: $0.status) ?? .unknown }
             .max(by: { $0.severity < $1.severity }) ?? .unknown
 
+        let worstIncident: ServiceStatus = activeIncidents
+            .map { incident -> ServiceStatus in
+                switch incident.impact {
+                case "critical": return .majorOutage
+                case "major":    return .partialOutage
+                case "minor":    return .degradedPerformance
+                default:         return .unknown
+                }
+            }
+            .max(by: { $0.severity < $1.severity }) ?? .operational
+
+        let iconStatus = [worstComponent, worstIncident]
+            .max(by: { $0.severity < $1.severity }) ?? .unknown
+
         if let button = statusItem.button {
-            button.image = menuBarIcon(for: worstStatus)
+            button.image = menuBarIcon(for: iconStatus)
         }
     }
 
