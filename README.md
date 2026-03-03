@@ -20,21 +20,32 @@ Polls the public Atlassian Statuspage API at:
 https://status.claude.com/api/v2/summary.json
 ```
 
-## Build & Install
+## Install via Homebrew
+
+```bash
+brew tap sklinov/claude-status
+brew install --cask claude-status
+```
+
+## Build from Source
 
 Requires Xcode Command Line Tools (`xcode-select --install`).
 
 ```bash
-chmod +x build.sh
 ./build.sh
-```
-
-This creates `build/Claude Status.app`. To install:
-
-```bash
 cp -r "build/Claude Status.app" /Applications/
 open "/Applications/Claude Status.app"
 ```
+
+## Release
+
+To build a release artifact:
+
+```bash
+./scripts/release.sh 1.0.0
+```
+
+This builds, optionally notarizes (if credentials are set), and creates `dist/ClaudeStatus-1.0.0.zip` with the SHA-256 needed for the Homebrew formula. See `scripts/notarize.sh` for notarization setup.
 
 ## Auto-Start at Login
 
