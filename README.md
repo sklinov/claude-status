@@ -27,6 +27,16 @@ brew tap sklinov/claude-status
 brew install --cask claude-status
 ```
 
+## macOS Security Note
+
+On first launch, macOS may show: **"Apple could not verify 'Claude Status.app' is free of malware"**. To allow the app:
+
+1. Open **System Settings → Privacy & Security**
+2. Scroll down to the **Security** section — you'll see a message about "Claude Status.app" being blocked
+3. Click **Open Anyway** and confirm
+
+This only needs to be done once.
+
 ## Build from Source
 
 Requires Xcode Command Line Tools (`xcode-select --install`).
